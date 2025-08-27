@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pregnancy Due‑Date & Week Calculator</title>
+    <meta name="description" content="Estimate your due date and track pregnancy week by entering the first day of your last menstrual period.">
+    <meta name="keywords" content="pregnancy due date calculator,pregnancy week calculator,due date,pregnancy timeline">
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 2rem; max-width: 800px; margin-left: auto; margin-right: auto; }
+        h1 { color: #333333; }
+        form { margin-top: 1rem; }
+        label { display: block; margin: 0.5rem 0 0.2rem; font-weight: bold; }
+        input, select { width: 100%; padding: 0.5rem; margin-bottom: 1rem; box-sizing: border-box; }
+        button { padding: 0.5rem 1rem; background-color: #0066cc; color: white; border: none; cursor: pointer; }
+        button:hover { background-color: #004d99; }
+        .result { margin-top: 1rem; background: #f5f5f5; padding: 1rem; border: 1px solid #dddddd; }
+        footer { margin-top: 2rem; font-size: 0.9rem; color: #666666; }
+    </style>
+</head>
+<body>
+
+    <h1>Pregnancy Due‑Date & Week Calculator</h1>
+    <p>Enter the first day of your last menstrual period (LMP) to estimate your due date and see which week you are currently in. This tool uses the average length of human pregnancy (40 weeks) to provide an approximate due date.</p>
+    <form id="due-form" onsubmit="event.preventDefault(); calculateDueDate();">
+        <label for="lmpDate">First Day of Last Menstrual Period</label>
+        <input type="date" id="lmpDate" required>
+        <button type="submit">Calculate</button>
+    </form>
+    <div id="dueResult" class="result" style="display:none;"></div>
+    <h2>How we estimate your due date</h2>
+    <p>Pregnancy is typically measured from the first day of your last menstrual period because it is difficult to pinpoint the exact date of conception. A full‑term pregnancy lasts around 40 weeks (280 days). Our calculator adds 280 days to your LMP to estimate when your baby might arrive.</p>
+    <p>Keep in mind:</p>
+    <ul>
+        <li>Due dates are only an estimate; only about 5% of babies arrive on their predicted due date.</li>
+        <li>Ultrasound scans can provide a more accurate estimate of gestational age.</li>
+        <li>Always consult your midwife or doctor for personalised care and advice.</li>
+    </ul>
+<script>
+
+    function calculateDueDate() {
+        const lmp = document.getElementById('lmpDate').value;
+        if (!lmp) return;
+        const startDate = new Date(lmp);
+        const dueDate = new Date(startDate.getTime());
+        // Pregnancy typically lasts 280 days (40 weeks)
+        dueDate.setDate(dueDate.getDate() + 280);
+        const today = new Date();
+        const diff = today.getTime() - startDate.getTime();
+        const week = Math.floor(diff / (7 * 24 * 3600 * 1000)) + 1;
+        const resultDiv = document.getElementById('dueResult');
+        resultDiv.style.display = 'block';
+        resultDiv.innerHTML = `<strong>Estimated Due Date:</strong> ${dueDate.toDateString()}<br>` +
+                              `<strong>Current Week:</strong> ${week} of 40`;
+    }
+
+</script>
+    <footer>
+        <p>Disclaimer: This tool is for informational purposes only. Please verify any calculations with official sources before making financial or health decisions.</p>
+    </footer>
+</body>
+</html>
